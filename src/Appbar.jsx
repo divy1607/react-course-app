@@ -16,7 +16,6 @@ function Appbar() {
             }
         }).then((res) => {
             res.json().then((data) => {
-                console.log(data);
                 if (data.username) {
                     setUsername(data.username)
                 }
@@ -34,20 +33,23 @@ function Appbar() {
                 <Typography>DIVYLEARN</Typography>
             </div>
 
-            <div>
-                {username}
-            </div>
+
             <div style={{ display: "flex" }}>
+                <div>
+                    <Typography>{username}</Typography>
+                </div>
                 <div style={{ marginRight: 10 }}>
                     <Button variant="contained" onClick={() => {
                         localStorage.setItem("token", null);
+                        window.location = "/"
                     }}
-                    >Sign Up</Button>
+                    >logout</Button>
                 </div>
             </div>
 
         </div>
     }
+
     return <div style={{
         display: "flex",
         justifyContent: "space-between",

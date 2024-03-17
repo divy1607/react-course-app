@@ -51,7 +51,6 @@ app.get("/admin/me", authenticateJwt, (req, res)=>{
 app.post('/admin/signup', (req, res) => {
   const { username, password } = req.body;
   const admin = ADMINS.find(a => a.username === username);
-  console.log("admin signup");
   if (admin) {
     res.status(403).json({ message: 'Admin already exists' });
   } else {

@@ -46,7 +46,7 @@ function AddCourse() {
                             }
                         }).then((res) => {
                             res.json().then((data) => {
-                                localStorage.setItem("token", data.token);
+                                alert("course added");
                             })
                         })
             }}>
