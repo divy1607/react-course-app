@@ -8,7 +8,7 @@ function Appbar() {
         display: "flex",
         justifyContent: "space-between",
         padding: 4
-    }}> 
+    }}>  
         <div>
             <Typography>DIVYLEARN</Typography>
         </div>
