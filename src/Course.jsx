@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Typography, TextField, Button } from "@mui/material";
+import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 
 function Course() {
     let { courseId } = useParams();
-    const [courses, setCourses] = useState([]);
+    const setCourses = useSetRecoilState(coursesState);
+
+    console.log("course");
 
     useEffect(() => {
         fetch("http://localhost:3000/admin/courses/", {
@@ -19,31 +22,24 @@ function Course() {
         })
     }, [])
 
-    let course = null;
-    for (let i = 0; i < courses.length; i++) {
-        if (courses[i].id == courseId) {
-            course = courses[i];
-        }
-    }
-
-    if (!course) {
-        return <div>
-            Loading...
-        </div>
-    }
+   
 
     return <div style = {{display: "flex", justifyContent:"center"}}>
-        <CourseCard course={course} />
-        <UpdateCard courses = {courses} course = {course} setCourses = {setCourses}/>
+        <CourseCard courseId={courseId} />
+        <UpdateCard courseId = {courseId} />
     </div>
 
 }
 
 function UpdateCard(props) {
+    console.log("UpdateCard");
     const [title, setTtile] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
     const course = props.course;
+    const [courses, setCourses] = useRecoilState(coursesState);
+
+    
 
     return <div style={{ display: "flex", justifyContent: "center",  backgroundColor: "#eeeeee" }}>
         <Card variant="outlined" style={{ width: 400, padding: 25 }}>
@@ -80,7 +76,7 @@ function UpdateCard(props) {
             <Button size='large'
                 variant="contained"
                 onClick={() => {
-                    fetch("http://localhost:3000/admin/courses/" + course.id, {
+                    fetch("http://localhost:3000/admin/courses/" + props.courseId, {
                         method: "PUT",
                         body: JSON.stringify({
                             title: title,
@@ -94,22 +90,21 @@ function UpdateCard(props) {
                         }
                     }).then((res) => {
                         res.json().then((data) => {
-                            // alert("course updated");
                             let updatedCourses = [];
-                            for(let i=0; i<props.courses.length; i++){
-                                if(props.courses[i].id == course.id){
+                            for(let i=0; i<courses.length; i++){
+                                if(courses[i].id ==props.courseId){
                                     updatedCourses.push( {
-                                        id: course.id,
+                                        id: props.courseId,
                                         title: title,
                                         description: description,
                                         imageLink: image
                                     })
                                 }
                                 else {
-                                    updatedCourses.push(props.courses[i]);
+                                    updatedCourses.push(courses[i]);
                                 }
                             }
-                            props.setCourses(updatedCourses);
+                            setCourses(updatedCourses);
                         })
                     })
                 }}>
@@ -119,7 +114,19 @@ function UpdateCard(props) {
 }
 
 function CourseCard(props) {
-    const course = props.course;
+    const courses = useRecoilValue(coursesState);
+    let course = null;
+    for (let i = 0; i < courses.length; i++) {
+        if (courses[i].id == props.courseId) {
+            course = courses[i];
+        }
+    }
+
+    console.log("coursecard");
+
+    if(!course){
+        return "loading..."
+    }
     return <Card style={{
             margin: 10,
             width: 300,
@@ -136,3 +143,10 @@ function CourseCard(props) {
 }
 
 export default Course
+
+
+
+const coursesState = atom({
+    key: 'coursesState', 
+    default: '', 
+  });
