@@ -13,13 +13,13 @@ let COURSES = [];
 
 // Read data from file, or initialize to empty array if file does not exist
 try {
-    ADMINS = JSON.parse(fs.readFileSync('admins.json', 'utf8'));
-    USERS = JSON.parse(fs.readFileSync('users.json', 'utf8'));
-    COURSES = JSON.parse(fs.readFileSync('courses.json', 'utf8'));
+  ADMINS = JSON.parse(fs.readFileSync('admins.json', 'utf8'));
+  USERS = JSON.parse(fs.readFileSync('users.json', 'utf8'));
+  COURSES = JSON.parse(fs.readFileSync('courses.json', 'utf8'));
 } catch {
-    ADMINS = [];
-    USERS = [];
-    COURSES = [];
+  ADMINS = [];
+  USERS = [];
+  COURSES = [];
 }
 console.log(ADMINS);
 
@@ -41,7 +41,7 @@ const authenticateJwt = (req, res, next) => {
   }
 };
 
-app.get("/admin/me", authenticateJwt, (req, res)=>{
+app.get("/admin/me", authenticateJwt, (req, res) => {
   res.json({
     username: req.user.username
   })

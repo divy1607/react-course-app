@@ -16,7 +16,7 @@ function Courses() {
             })
         })
     }, [])
-    return <div style={{ display: "flex", flexWrap : "wrap", justifyContent : "center"}}>
+    return <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
 
         {courses.map(course => {
             return <Course course={course} />
@@ -24,7 +24,7 @@ function Courses() {
     </div>
 }
 
- function Course(props) {
+function Course(props) {
     return <Card style={{
         margin: 10,
         width: 300,

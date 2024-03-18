@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Typography, TextField, Button } from "@mui/material";
-import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 function Course() {
     let { courseId } = useParams();
@@ -22,11 +22,11 @@ function Course() {
         })
     }, [])
 
-   
 
-    return <div style = {{display: "flex", justifyContent:"center"}}>
+
+    return <div style={{ display: "flex", justifyContent: "center" }}>
         <CourseCard courseId={courseId} />
-        <UpdateCard courseId = {courseId} />
+        <UpdateCard courseId={courseId} />
     </div>
 
 }
@@ -39,9 +39,9 @@ function UpdateCard(props) {
     const course = props.course;
     const [courses, setCourses] = useRecoilState(coursesState);
 
-    
 
-    return <div style={{ display: "flex", justifyContent: "center",  backgroundColor: "#eeeeee" }}>
+
+    return <div style={{ display: "flex", justifyContent: "center", backgroundColor: "#eeeeee" }}>
         <Card variant="outlined" style={{ width: 400, padding: 25 }}>
             <Typography>Update Course Details</Typography>
             <TextField
@@ -91,9 +91,9 @@ function UpdateCard(props) {
                     }).then((res) => {
                         res.json().then((data) => {
                             let updatedCourses = [];
-                            for(let i=0; i<courses.length; i++){
-                                if(courses[i].id ==props.courseId){
-                                    updatedCourses.push( {
+                            for (let i = 0; i < courses.length; i++) {
+                                if (courses[i].id == props.courseId) {
+                                    updatedCourses.push({
                                         id: props.courseId,
                                         title: title,
                                         description: description,
@@ -124,21 +124,21 @@ function CourseCard(props) {
 
     console.log("coursecard");
 
-    if(!course){
+    if (!course) {
         return "loading..."
     }
     return <Card style={{
-            margin: 10,
-            width: 300,
-            minHeight: 200,
-        }}>
-            <Typography textAlign={"center"} variant="h6">{course.title}</Typography>
+        margin: 10,
+        width: 300,
+        minHeight: 200,
+    }}>
+        <Typography textAlign={"center"} variant="h6">{course.title}</Typography>
 
-            <br />
-            <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
-            <br />
-            <img src={course.imageLink} style={{ width: 300 }} />
-        </Card>
+        <br />
+        <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
+        <br />
+        <img src={course.imageLink} style={{ width: 300 }} />
+    </Card>
 
 }
 
@@ -147,6 +147,6 @@ export default Course
 
 
 const coursesState = atom({
-    key: 'coursesState', 
-    default: '', 
-  });
+    key: 'coursesState',
+    default: '',
+});
