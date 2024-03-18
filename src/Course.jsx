@@ -32,9 +32,9 @@ function Course() {
         </div>
     }
 
-    return <div>
+    return <div style = {{display: "flex", justifyContent:"center"}}>
         <CourseCard course={course} />
-        <UpdateCard course = {course} />
+        <UpdateCard courses = {courses} course = {course} setCourses = {setCourses}/>
     </div>
 
 }
@@ -94,7 +94,22 @@ function UpdateCard(props) {
                         }
                     }).then((res) => {
                         res.json().then((data) => {
-                            alert("course updated");
+                            // alert("course updated");
+                            let updatedCourses = [];
+                            for(let i=0; i<props.courses.length; i++){
+                                if(props.courses[i].id == course.id){
+                                    updatedCourses.push( {
+                                        id: course.id,
+                                        title: title,
+                                        description: description,
+                                        imageLink: image
+                                    })
+                                }
+                                else {
+                                    updatedCourses.push(props.courses[i]);
+                                }
+                            }
+                            props.setCourses(updatedCourses);
                         })
                     })
                 }}>
