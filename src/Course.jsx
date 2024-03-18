@@ -80,7 +80,7 @@ function UpdateCard(props) {
             <Button size='large'
                 variant="contained"
                 onClick={() => {
-                    fetch("http://localhost:3000/admin/courses/" + course.Id, {
+                    fetch("http://localhost:3000/admin/courses/" + course.id, {
                         method: "PUT",
                         body: JSON.stringify({
                             title: title,
