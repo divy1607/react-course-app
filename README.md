@@ -1,3 +1,3 @@
-# React + Vite
+# React
 
 Basic course selling react app
